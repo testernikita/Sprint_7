@@ -37,7 +37,10 @@ public class CourierCredentials {
         return new CourierCredentials().setPassword(courier.password);
     }
 
-    public static CourierCredentials getWithRandomLoginAndPassword() {
-        return new CourierCredentials().setLogin(RandomStringUtils.randomAlphabetic(10)).setPassword(RandomStringUtils.randomAlphabetic(10));
+    public static CourierCredentials getWithRandomLogin(Courier courier) {
+        return new CourierCredentials().setLogin(RandomStringUtils.randomAlphabetic(10)).setPassword(courier.password);
+    }
+    public static CourierCredentials getWithRandomPassword(Courier courier) {
+        return new CourierCredentials().setLogin(courier.login).setPassword(RandomStringUtils.randomAlphabetic(10));
     }
 }
