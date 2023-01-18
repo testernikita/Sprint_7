@@ -6,7 +6,7 @@ import io.restassured.response.ValidatableResponse;
 import static io.restassured.RestAssured.given;
 
 public class CourierClient extends RestAssuredClient{
-    private static final String COURIER_CREATION_PATH = "api/v1/courier/";
+    private static final String COURIER_PATH = "api/v1/courier/";
 
     @Step("Send POST request to api/v1/courier/")
     public ValidatableResponse create(Courier courier) {
@@ -14,7 +14,7 @@ public class CourierClient extends RestAssuredClient{
                 .spec(getBaseSpec())
                 .body(courier)
                 .when()
-                .post(COURIER_CREATION_PATH)
+                .post(COURIER_PATH)
                 .then()
                 .assertThat();
     }
@@ -25,7 +25,7 @@ public class CourierClient extends RestAssuredClient{
                 .spec(getBaseSpec())
                 .body(credentials)
                 .when()
-                .post(COURIER_CREATION_PATH + "login/")
+                .post(COURIER_PATH + "login/")
                 .then()
                 .assertThat();
     }
@@ -35,7 +35,7 @@ public class CourierClient extends RestAssuredClient{
         return given()
                 .spec(getBaseSpec())
                 .when()
-                .delete(COURIER_CREATION_PATH + courierId)
+                .delete(COURIER_PATH + courierId)
                 .then()
                 .assertThat()
                 .statusCode(200)

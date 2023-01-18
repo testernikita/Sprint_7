@@ -34,7 +34,7 @@ public class CourierCreationTest {
     @Description("Courier creation using valid data: login, password, name")
     public void courierCanCreatedWithValidData() {
         ValidatableResponse courierCreateResponse = courierClient.create(courier);
-        ValidatableResponse courierLoginResponse = courierClient.login(CourierCredentials.from(courier));
+        ValidatableResponse courierLoginResponse = courierClient.login(CourierCredentials.fromRequiredCredentials(courier));
 
         courierId = courierLoginResponse.extract().path("id");
 
@@ -69,7 +69,7 @@ public class CourierCreationTest {
         courier = Courier.getWithLoginAndPassword();
 
         ValidatableResponse courierCreateResponse = courierClient.create(courier);
-        ValidatableResponse courierLoginResponse = courierClient.login(CourierCredentials.from(courier));
+        ValidatableResponse courierLoginResponse = courierClient.login(CourierCredentials.fromRequiredCredentials(courier));
 
         courierId = courierLoginResponse.extract().path("id");
 
@@ -87,11 +87,11 @@ public class CourierCreationTest {
     public void courierCanNotCreatedWithNameOnly() {
         courier = Courier.getWithFirstNameOnly();
 
-        ValidatableResponse secondCourierCreateResponse = courierClient.create(courier);
+        ValidatableResponse courierCreateResponse = courierClient.create(courier);
 
         //запрос возвращает правильный код ответа;
-        secondCourierCreateResponse.statusCode(400);
-        secondCourierCreateResponse.assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
+        courierCreateResponse.statusCode(400);
+        courierCreateResponse.assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
 
     //если одного из полей нет, запрос возвращает ошибку;
@@ -101,11 +101,11 @@ public class CourierCreationTest {
     public void courierCanNotCreatedWithLoginOnly() {
         courier = Courier.getWithLoginOnly();
 
-        ValidatableResponse secondCourierCreateResponse = courierClient.create(courier);
+        ValidatableResponse courierCreateResponse = courierClient.create(courier);
 
         //запрос возвращает правильный код ответа;
-        secondCourierCreateResponse.statusCode(400);
-        secondCourierCreateResponse.assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
+        courierCreateResponse.statusCode(400);
+        courierCreateResponse.assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
 
     //если одного из полей нет, запрос возвращает ошибку;
@@ -115,10 +115,10 @@ public class CourierCreationTest {
     public void courierCanNotCreatedWithPasswordOnly() {
         courier = Courier.getWithPasswordOnly();
 
-        ValidatableResponse secondCourierCreateResponse = courierClient.create(courier);
+        ValidatableResponse courierCreateResponse = courierClient.create(courier);
 
         //запрос возвращает правильный код ответа;
-        secondCourierCreateResponse.statusCode(400);
-        secondCourierCreateResponse.assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
+        courierCreateResponse.statusCode(400);
+        courierCreateResponse.assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
 }
