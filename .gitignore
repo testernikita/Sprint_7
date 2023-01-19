@@ -1,0 +1,5 @@
+#idea directory
+.idea
+#target directory
+/target/*
+!target/allure-results/
